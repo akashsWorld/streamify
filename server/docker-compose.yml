@@ -1,0 +1,11 @@
+services:
+
+  db:
+    image: postgres:14.12-alpine3.20
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: streamify
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: streamify
+    ports:
+      - "5432:5432"
