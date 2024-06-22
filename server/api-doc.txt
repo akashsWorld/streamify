@@ -1,0 +1,50 @@
+Create User:
+
+Update User:
+
+    user_name
+
+Login User:
+
+Create User Channel:
+
+Update Channel:
+
+    channel_name:
+
+Upload a Video:
+
+Update Video:
+    Video title:
+    Video Thumbnail:
+    Video File:
+
+Delete Video:
+
+Watch Video:
+
+Get all Videos:
+
+Search a Video By name:
+
+Like a Video:
+
+Comment on a Video:
+
+Get All Liked Video:
+
+Create a que:
+
+Subscribe to a Channel:
+
+
+
+
+
+
+
+
+
+
+
+
