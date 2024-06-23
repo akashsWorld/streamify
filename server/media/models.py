@@ -38,7 +38,7 @@ class Video(models.Model):
     genera = ArrayField(models.CharField(max_length=20, choices=choice), default=get_genera)
     search_string = models.TextField(default='')
     channel_id = models.ForeignKey(Channel, on_delete=models.CASCADE,default='-')
-    playlist_id = models.ForeignKey(Playlist, on_delete=models.CASCADE,null=True)
+    playlist_id = models.ForeignKey(Playlist, on_delete=models.SET_NULL,null=True)
 
 
 class Subscriber(models.Model):

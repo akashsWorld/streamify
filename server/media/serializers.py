@@ -10,17 +10,17 @@ class ChannelSerializer(serializers.Serializer):
     channel_description = serializers.CharField(max_length=1000, min_length=20, allow_blank=False)
 
     def create(self, validated_data):
-
         user_id = validated_data['id']
         channel = Channel(id_id=user_id
                           , channel_name=validated_data['channel_name'],
                           channel_description=validated_data['channel_description'])
         channel.save()
-        print(channel)
-        return {}
+        return channel
 
-    def update(self, instance, validated_data):
-        print('Running Update method')
-        print(instance)
-        print(validated_data)
+    def update(self, instance: Channel, validated_data: Channel):
+        instance.channel_description = validated_data['channel_description']
+        instance.channel_name = validated_data['channel_name']
+        instance.save()
         return instance
+
+
