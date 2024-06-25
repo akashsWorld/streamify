@@ -9,3 +9,8 @@ services:
       POSTGRES_DB: streamify
     ports:
       - "5432:5432"
+  broker:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"

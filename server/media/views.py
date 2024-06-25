@@ -3,10 +3,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ChannelSerializer
 from .models import Channel
-from server.settings import MEDIA_URL,MEDIA_ROOT
 from django.core.files.storage import default_storage
 import uuid
 import os
+from .tasks import some_task
+
 
 class ChannelView(APIView):
     def post(self, request):
@@ -32,16 +33,17 @@ class ChannelView(APIView):
 
 class VideoView(APIView):
     def post(self, request):
-        file = request.FILES['video']
+        # file = request.FILES['video']
         channel_id = request.POST.get('channel_id')
 
         # print(file.name)
         # print(channel_id)
-        name, extension = os.path.splitext(file.name)
+        # name, extension = os.path.splitext(file.name)
         # print(_)
 
-        new_file_name = f'{uuid.uuid4()}-{name}{extension}'
-        default_storage.save(new_file_name,file)
+        # new_file_name = f'{uuid.uuid4()}-{name}{extension}'
+        # default_storage.save(new_file_name, file)
         # print(MEDIA_ROOT)
+        some_task.delay(channel_id)
 
         return Response('empty Object', status=status.HTTP_201_CREATED)

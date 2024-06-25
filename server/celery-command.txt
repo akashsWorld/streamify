@@ -1,0 +1,2 @@
+Windows command :->
+    celery -A server worker -l info --pool=solo
