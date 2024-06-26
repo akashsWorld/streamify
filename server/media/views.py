@@ -132,3 +132,20 @@ class VideoView(APIView):
         if saved_data['saved_object'] is None:
             return Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
         return Response(status=status.HTTP_201_CREATED)
+
+    def get(self, request):
+        # TODO: implement the feature of getting videos
+        if 'watch' in request.GET:
+            #  If the watch query is present
+            return Response('Watch', status=status.HTTP_200_OK)
+
+        elif 'search_q' in request.GET:
+            # If the search_q present but not the watch.
+            return Response('Search Query', status=status.HTTP_200_OK)
+
+        elif 'genra' in request.GET:
+            # If the genra present not the search_q and watch.
+            return Response('Genra', status=status.HTTP_200_OK)
+
+        # If nothing present then return all type videos.
+        return Response({}, status=status.HTTP_200_OK)

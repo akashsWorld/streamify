@@ -4,7 +4,6 @@ from .models import Channel, Video
 import os
 from django.core.files.storage import default_storage
 import uuid
-
 from .tasks import process_video, process_updated_video
 
 
@@ -120,7 +119,7 @@ class VideoSerializer(serializers.Serializer):
         #     }
 
         # TODO:Enable the video processing feature.
-        # process_video.delay(
+        # process_video.delay_on_commit(
         #     video_name=new_file_name,
         #     video_id=video.id,
         #     extension=video_extension
@@ -164,7 +163,7 @@ class VideoSerializer(serializers.Serializer):
                 video_extension = validated_data['video_extension']
                 # TODO: Enable the saving and processing part
                 # default_storage.save(f'./temp/{video_name}{video_extension}', video)
-                # process_updated_video.delay(video_name, instance.id, video_extension)
+                # process_updated_video.delay_on_commit(video_name, instance.id, video_extension)
 
             # Saving the Updated Image to localstorage and Delete the old one.
             if is_new_thumbnail_exist:
