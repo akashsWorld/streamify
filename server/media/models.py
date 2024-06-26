@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 import uuid
 from user.models import User
-from .constants import get_genera, get_empty_array
+from .constants import get_default_genra
 
 
 class Channel(models.Model):
@@ -41,22 +41,23 @@ class Video(models.Model):
         ('1080p', '1080p')
     )
 
-    id = models.UUIDField(primary_key=True, auto_created=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=300)
     description = models.TextField()
     url = models.CharField(max_length=500)
-    thumbnail = models.CharField(max_length=500, null=True)
+    thumbnail_extension = models.CharField(max_length=10)
     uploaded_on = models.DateTimeField(auto_now_add=True, editable=False)
     updated_on = models.DateField(auto_now=True)
-    genra = ArrayField(models.CharField(max_length=20, choices=cat_choice), default=get_genera)
+    genra = ArrayField(models.CharField(max_length=20, choices=cat_choice),
+                       default=get_default_genra)
     hash_tags = ArrayField(
         models.CharField(max_length=50),
-        default=get_empty_array()
+        default=list
     )
     search_string = models.TextField(default='')
     available_quality = ArrayField(
         models.CharField(max_length=5, choices=quality),
-        default=get_empty_array()
+        default=list
     )
     upload_status = models.CharField(max_length=4, choices=status, default='PEND')
     channel_id = models.ForeignKey(Channel, on_delete=models.CASCADE, default='-')

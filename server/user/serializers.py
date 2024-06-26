@@ -9,6 +9,5 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User(**validated_data)
-        print(validated_data)
         user.save()
         return user

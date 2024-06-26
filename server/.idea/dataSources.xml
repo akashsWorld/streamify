@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="streamify@localhost" uuid="688d36f7-869b-43c1-9870-2adaad7e989a">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/streamify</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="Django default" uuid="626e6176-d6ca-492c-8ad9-80b800e2a8dd">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>

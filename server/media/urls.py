@@ -2,6 +2,6 @@ from django.urls import path
 from .views import ChannelView, VideoView
 
 urlpatterns = [
-    path('channel/', ChannelView.as_view()),
-    path('upload/', VideoView.as_view())
+    path('channel/<_id>', ChannelView.as_view()),
+    path('upload/<_id>', VideoView.as_view()),
 ]

@@ -1,6 +1,2 @@
-def get_genera():
-    return list('GEN')
-
-
-def get_empty_array():
-    return []
+def get_default_genra():
+    return list(['GEN'])

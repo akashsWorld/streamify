@@ -4,7 +4,7 @@ from .models import Video
 
 
 @shared_task
-def process_video(video_name, channel_id, extension):
+def process_video(video_name, video_id, extension):
     exists = os.path.exists('./files/processed/video_name')
     if exists:
         # directory_name = 'New'
@@ -15,3 +15,9 @@ def process_video(video_name, channel_id, extension):
         # exit_code = process.
         print(process)
         print("Hello World")
+
+
+@shared_task
+def process_updated_video(video_name, video_id, extension):
+    print('Execute some logic')
+#     TODO:Write all the logics
