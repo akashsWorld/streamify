@@ -1,3 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+}
+html{
+  background-color: #000;
+}
+
+@layer components {
+  .nav-items{
+    @apply text-white font-heading py-2 text-lg cursor-pointer relative after:nav-items__after hover:after:w-full px-2
+  }
+  .nav-items__after{
+    @apply absolute bottom-2 bg-white left-0 h-0.5 w-0 transition-all duration-300 ease-out
+  }
+  .btn{
+    @apply h-full w-fit text-white z-10 px-3 py-2 border-white border mx-3 my-1 rounded-md relative overflow-hidden after:btn-after hover:text-black transition-all hover:after:btn-after__hover
+  }
+  .btn-after{
+    @apply absolute rounded-full bottom-0 left-0 bg-white duration-500 transition-all ease-out
+  }
+  .btn-after__hover{
+    @apply w-full h-full -z-10 scale-125
+  }
+  .user-btn{
+    @apply flex relative text-white h-full w-fit py-2 justify-evenly border rounded-lg after:user-btn-after hover:user-btn__hover hover:after:user-btn-after__hover overflow-hidden transition-all
+  }
+  .user-btn__hover{
+    @apply text-black bg-transparent
+  } 
+  .user-btn-after{
+    @apply absolute -bottom-2 justify-end h-2 w-2 rounded-full bg-white -z-10 content-normal duration-300 transition-all
+  }
+  .user-btn-after__hover{
+    @apply scale-[20] 
+  }
+}
+
