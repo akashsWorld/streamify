@@ -1,48 +1,51 @@
-<nav class="max-h-24 flex items-center bg-transparent">
+<nav class="max-h-24 flex items-center bg-transparent top-0">
   <div class="flex items-center my-4 w-2/4 mx-4">
-    <img
-      ngSrc="streamify.png"
-      height="80"
-      width="80"
-      alt="streamify"
-      class="h-10 w-10"
-    />
-    <h1 class="mx-2 font-heading text-xl font-medium uppercase text-white">
-      Streamify
-    </h1>
+    <div class="flex items-center cursor-pointer" (click)="router.navigate([''])">
+      <img
+        ngSrc="streamify.png"
+        height="80"
+        width="80"
+        alt="streamify"
+        class="h-10 w-10"
+      />
+      <h1 class="mx-2 font-heading text-xl font-medium uppercase text-white">
+        Streamify
+      </h1>
+    </div>
     <input
       name="search-bar"
       (keydown.enter)="onEnterSearch()"
       [(ngModel)]="searchString"
-      class="min-w-[30vw] max-h-14 rounded-full border-2 border-white px-4 py-2 ml-4 outline-none text-white"
+      class="min-w-[30vw] max-h-14 rounded-full border-2 border-white px-4 py-2 ml-4 outline-none text-black"
       placeholder="Search Videos"
     />
   </div>
   <div class="flex w-1/4 items-center justify-evenly">
-    <p class="nav-items">Popular</p>
-    <p class="nav-items">Genra</p>
-    <p class="nav-items">History</p>
-    <p class="nav-items">Liked Videos</p>
+    <a class="nav-items">Popular</a>
+    <a class="nav-items">Genra</a>
+    <a class="nav-items">History</a>
+    <a class="nav-items">Liked Videos</a>
   </div>
 
   <div class="flex items-center w-1/4 justify-evenly">
-    @if(isLoggedIn){
-    <app-button [buttonName]="'Sign in'" />
-    <app-button [buttonName]="'Sign Up'" />
-
+    @if(!isLoggedIn){
+    <button class="user-btn" (click)="this.router.navigate(['/auth'])">
+      Sign In
+    </button>
     }@else{
     <div class="user-btn">
       <fa-icon [icon]="userIcon" class="pl-3"></fa-icon>
       <p class="font-heading px-3">{{ "Akash Biswas" }}</p>
     </div>
     @if(haveAnyChannel!==null){
-      <div class="user-btn">
-        <fa-icon [icon]="VideoIcon" class="pl-3"></fa-icon>
-      <p class="font-heading px-3">{{haveAnyChannel}}</p>
+    <div class="user-btn">
+      <fa-icon [icon]="VideoIcon" class="pl-3"></fa-icon>
+      <p class="font-heading px-3">{{ haveAnyChannel }}</p>
     </div>
     }@else {
-      <p class="text-white font-body mx-2 hover:underline cursor-pointer">Want to create a channel?</p>
-    }
-    }
+    <p class="text-white font-body mx-2 hover:underline cursor-pointer">
+      Want to create a channel?
+    </p>
+    } }
   </div>
 </nav>

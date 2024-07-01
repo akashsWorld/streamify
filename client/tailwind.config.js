@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const {transparent,black,red,white, gray}= require('tailwindcss/colors')
+
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
@@ -6,8 +8,11 @@ module.exports = {
   theme: {
     colors:{
       white:'#E2E8F0',
-      black:'#000',
-      transparent: 'transparent'
+      black: black,
+      red,
+      transparent: transparent,
+      primaryWhite: white,
+      gray
     },
     fontFamily:{
       'body':["Dosis", 'sans-serif'],

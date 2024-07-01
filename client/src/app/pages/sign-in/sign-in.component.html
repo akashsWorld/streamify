@@ -1,0 +1,12 @@
+<div class="h-fit min-w-fit flex flex-col items-center justify-center shadow-black shadow-2xl bg-black/60 rounded-2xl py-12 gap-10 ">
+    <h3 class="font-heading text-primaryWhite inline-block font-bold text-3xl">Sign In</h3>
+    <app-input name="Email" type="email"></app-input>
+    <label for="password-field" class="flex items-center text-white font-semibold mx-6">
+       Password : <div class="flex items-center border ml-2 h-9 rounded-lg p-2">
+            <input [type]="showPassword?'text':'password'" class="outline-none px-2 bg-transparent">
+            <fa-icon (click)="showPassword=!showPassword" class="cursor-pointer text-white min-w-5" [icon]="showPassword? passwordVisible:passwordNotVisible"></fa-icon>
+        </div>
+    </label>
+    <button class="user-btn p-2">Sign In</button>
+    <p (click)="this.router.navigate(['/auth/signUp'])" class="text-body text-white text-lg cursor-pointer font-normal hover:underline hover:text-primaryWhite">Not have an account? Sign Up</p>
+</div>
