@@ -1,0 +1,23 @@
+<div class="flex justify-center bg-black/40 items-center w-full h-screen relative">
+    <img ngSrc="bg-fill.jpeg" class="-z-10 absolute h-full w-full" width="100" height="100" alt="bg-login">
+    <div class="flex w-fit h-fit flex-col gap-4 items-center justify-center p-4 bg-black/70 shadow-xl rounded-xl">
+    <section class="flex justify-center items-center flex-col">
+        <section class="w-20 h-20 overflow-hidden rounded-full flex justify-center items-center relative">
+            @if(channelIcon){
+                <img src="streamify.png" alt="channel" class="h-full w-full">
+            }@else {
+                <div class="w-fit h-fit overflow-hidden text-center">
+                    <fa-icon class="text-white text-7xl font-thin" [icon]="faUser"></fa-icon>
+                </div>
+            }
+            <input type="file" class="absolute h-full w-full overflow-hidden file:hidden bg-white opacity-0 cursor-pointer">
+        </section>
+        @if(!channelIcon){
+            <p class="text-white font-heading ">Upload Channel Icon</p>
+        }
+    </section>
+        <app-input [name]="'Channel Name'" [type]="'text'"></app-input>
+        <app-input [name]="'Channel Description'" [type]="'text'"></app-input>
+        <button class="user-btn">Create Channel</button>
+    </div>
+</div>

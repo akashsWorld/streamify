@@ -4,6 +4,8 @@ import { ChannelComponent } from './pages/channel/channel.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { CreateChannelComponent } from './pages/create-channel/create-channel.component';
+import { VideosComponent } from './pages/videos/videos.component';
 
 export const routes: Routes = [
     {
@@ -11,8 +13,16 @@ export const routes: Routes = [
         component:HomePageComponent,
         children:[
             {
-                path:'channel',
+                path:'',
+                component:VideosComponent
+            },
+            {
+                path:'channel/:id',
                 component:ChannelComponent
+            },
+            {
+                path:'createChannel',
+                component:CreateChannelComponent
             }
         ]
     },

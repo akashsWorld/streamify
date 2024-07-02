@@ -13,7 +13,7 @@ body{
 
 @layer components {
   .nav-items{
-    @apply text-white font-heading py-2 text-lg cursor-pointer relative after:nav-items__after hover:after:w-full px-2
+    @apply text-white min-w-fit font-heading py-2 text-lg cursor-pointer relative after:nav-items__after hover:after:w-full px-2
   }
   .nav-items__after{
     @apply absolute bottom-2 rounded-md bg-white left-0 h-0.5 w-0 transition-all duration-300 ease-out
@@ -34,7 +34,7 @@ body{
     @apply text-black
   } 
   .user-btn-after{
-    @apply absolute -bottom-2 justify-end h-2 w-2 rounded-full bg-primaryWhite -z-10 content-normal duration-300 transition-all
+    @apply absolute -bottom-2 justify-end h-2 w-2 rounded-full bg-primaryWhite -z-10 content-normal duration-500 transition-all ease-out
   }
   .user-btn-after__hover{
     @apply scale-[40] 

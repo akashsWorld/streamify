@@ -26,7 +26,7 @@ export class NavbarComponent {
   searchString:string=''
 
   @Input()
-  isLoggedIn=true
+  isLoggedIn=false
 
   @Input({required:false})
   haveAnyChannel:null|string = null
@@ -37,7 +37,7 @@ export class NavbarComponent {
   onEnterSearch=()=>{
     console.log('Key pressed');
     this.onSearch.emit()
-    
-  }  
+
+  }
 
 }
