@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild,ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-videos',
@@ -7,5 +7,12 @@ import { Component } from '@angular/core';
   templateUrl: './videos.component.html'
 })
 export class VideosComponent {
+  @ViewChild('billBoard', { static: false }) billBoard: ElementRef|undefined= undefined;
 
+  playVideo() {
+    console.log('Hello ')
+    console.log(this.billBoard)
+    if(this.billBoard)
+    this.billBoard.nativeElement.play();
+  }
 }

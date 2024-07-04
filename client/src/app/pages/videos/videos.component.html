@@ -1,4 +1,20 @@
-<div class="text-white w-full">
-    <video src="bg-video.mp4" width="1920" height="1080" autoplay muted>
-    </video>
+<div class="h-full w-full relative">
+    <div class="w-full relative h-[85vh] flex justify-center items-center overflow-hidden after:bill-board-after">
+        <video [autoplay]="true" [muted]="true" [loop]="true" class="h-auto object-cover">
+            <source src="bg-video.mp4" [type]="'video/mp4'">
+        </video>
+        <div class="absolute left-0 text-white  p-36 h-full flex flex-col justify-center bg-gradient-to-r from-black/60 to-transparent">
+            <h1 class="uppercase font-body font-bold text-7xl bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-primaryWhite">
+                Streamify
+            </h1>
+            <p class="text-2xl text-primaryWhite font-body ">A streaming Platform that all you need</p>
+        </div>
+    </div>
+
+    
+
+    <div class="text-white">
+        Video Items
+    </div>
 </div>
+

@@ -39,5 +39,8 @@ body{
   .user-btn-after__hover{
     @apply scale-[40] 
   }
+  .bill-board-after{
+    @apply absolute h-full w-full bg-black/40 top-0
+  }
 }
 
