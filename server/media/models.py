@@ -10,8 +10,8 @@ class Channel(models.Model):
     id = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     channel_name = models.CharField(max_length=50)
     channel_description = models.TextField()
-    channel_thumbnail = models.CharField(max_length=1000,default='-')
-    extension = models.CharField(max_length=10,default='-')
+    channel_thumbnail = models.CharField(max_length=1000, default='-')
+    extension = models.CharField(max_length=10, default='-')
     created_on = models.DateField(auto_now_add=True)
 
 
@@ -47,7 +47,7 @@ class Video(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=300)
     description = models.TextField()
-    url = models.CharField(max_length=500)
+    url = models.CharField(max_length=1000, default='-')
     thumbnail_extension = models.CharField(max_length=10)
     uploaded_on = models.DateTimeField(auto_now_add=True, editable=False)
     updated_on = models.DateField(auto_now=True)
@@ -62,6 +62,7 @@ class Video(models.Model):
         models.CharField(max_length=5, choices=quality),
         default=list
     )
+    video_extension = models.CharField(max_length=10,default='-')
     upload_status = models.CharField(max_length=4, choices=status, default='PEND')
     channel_id = models.ForeignKey(Channel, on_delete=models.CASCADE, default='-')
     playlist_id = models.ForeignKey(Playlist, on_delete=models.SET_NULL, null=True)

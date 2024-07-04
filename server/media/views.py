@@ -88,17 +88,11 @@ class VideoView(APIView):
         if 'thumbnail' not in request.FILES:
             return Response('Invalid Request', status=status.HTTP_400_BAD_REQUEST)
 
-        request_data = {
-            'channel_id': _id,
-            'title': request.POST.get('title'),
-            'description': request.POST.get('description'),
-            'genra': list(request.POST.getlist('genra')),
-            'hash_tags': list(request.POST.getlist('hash_tags')),
-            'search_string': 'Big Search Field',
-            'video': request.FILES['video'],
-            # This thumbnail is verified by the serializer if self.
-            'thumbnail': request.FILES['thumbnail']
-        }
+
+        request_data = {'channel_id': _id, 'title': request.POST.get('title'),
+                        'description': request.POST.get('description'), 'genra': list(request.POST.getlist('genra')),
+                        'hash_tags': list(request.POST.getlist('hash_tags')), 'video': request.FILES['video'],
+                        'thumbnail': request.FILES['thumbnail']}
 
         serializer = VideoSerializer(data=request_data)
         serializer.is_valid(raise_exception=True)
@@ -131,15 +125,6 @@ class VideoView(APIView):
                                                               in request.POST else video_obj.hash_tags,
             'search_string': 'Big search String'
         }
-
-        # TODO: if any search string dependent variable changed then update the search string
-
-        # if False:
-        #     request_data['search_string'] = video_service.create_search_string(
-        #         request_data['title'],
-        #         request_data['genra'],
-        #         request_data['hash_tags'],
-        #     )
 
         if not is_valid_video(request):
             video = request.FILES['video']

@@ -1,5 +1,5 @@
 env
 files/images/*
 files/processed/*
-files/temp/*
 files/channel/*
+files/videos/*
