@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.db import DatabaseError, transaction
 from .models import Channel, Video
 import os
+import shutil
 from django.core.files.storage import default_storage
 import uuid
 from utils.video_service import create_search_string
@@ -204,8 +205,7 @@ class VideoSerializer(serializers.Serializer):
                 video_extension = validated_data['video_extension']
                 old_extension = old_instance.video_extension
                 default_storage.delete(f'./videos/{video_name}{old_extension}')
-                print(video_name)
-                os.remove(f'./files/processed/{video_name}')
+                shutil.rmtree(f'./files/processed/{video_name}')
                 # TODO: Enable the saving and processing part
                 default_storage.save(f'./videos/{video_name}{video_extension}', video)
                 process_video.delay_on_commit(video_name, instance.id, video_extension)
