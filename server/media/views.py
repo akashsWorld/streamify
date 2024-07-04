@@ -36,9 +36,9 @@ class ChannelView(APIView):
 
         return Response(data={
             'id': saved_object.id_id,
-            'channel_name':saved_object.channel_name,
-            'channel_description':saved_object.channel_description,
-            'thumbnail':saved_object.channel_thumbnail
+            'channel_name': saved_object.channel_name,
+            'channel_description': saved_object.channel_description,
+            'thumbnail': saved_object.channel_thumbnail
         }, status=status.HTTP_201_CREATED)
 
     def put(self, request, _id):
@@ -55,8 +55,13 @@ class ChannelView(APIView):
                             'channel_thumbnail'] if 'channel_thumbnail' in request.FILES else None}
         serializer = ChannelSerializer(data=request_data)
         serializer.is_valid(raise_exception=True)
-        serializer.update(instance=instance.first(), validated_data=data)
-        return Response(serializer.validated_data, status=status.HTTP_200_OK)
+        saved_object: Channel = serializer.update(instance=instance.first(), validated_data=serializer.validated_data)['saved_object']
+        return Response({
+            'id': saved_object.id_id,
+            'channel_name': saved_object.channel_name,
+            'channel_description': saved_object.channel_description,
+            'channel_thumbnail': saved_object.channel_thumbnail
+        }, status=status.HTTP_200_OK)
 
 
 def is_valid_video(request):

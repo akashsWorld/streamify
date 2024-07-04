@@ -56,7 +56,7 @@ class ChannelSerializer(serializers.Serializer):
 
         try:
             if channel_thumbnail is not None:
-                old_channel_name = f'./channel/{instance["channel_thumbnail"]}{instance["extension"]}'
+                old_channel_name = f'./channel/{instance.channel_thumbnail}{instance.extension}'
                 default_name, extension = os.path.splitext(channel_thumbnail.name)
                 thumbnail_name = f'{uuid.uuid4()}-{default_name}'
                 instance.channel_thumbnail = thumbnail_name
