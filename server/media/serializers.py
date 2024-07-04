@@ -10,17 +10,32 @@ from .tasks import process_video, process_updated_video
 class ChannelSerializer(serializers.Serializer):
     id = serializers.CharField(max_length=100)
     channel_name = serializers.CharField(max_length=50, allow_blank=False)
+    channel_thumbnail = serializers.FileField(allow_null=True)
     channel_description = serializers.CharField(max_length=1000, min_length=20, allow_blank=False)
 
     @transaction.atomic
     def create(self, validated_data):
         user_id = validated_data['id']
-        channel = Channel(id_id=user_id
-                          , channel_name=validated_data['channel_name'],
+        channel_thumbnail = validated_data['channel_thumbnail']
+        default_name, extension = os.path.splitext(channel_thumbnail.name)
+        thumbnail_name = f'{uuid.uuid4()}-{default_name}'
+        channel = Channel(id_id=user_id,
+                          channel_name=validated_data['channel_name'],
+                          channel_thumbnail=thumbnail_name,
+                          extension=extension,
                           channel_description=validated_data['channel_description'])
         try:
             channel.save()
         except DatabaseError:
+            return {
+                'message': 'Failed',
+                'saved_object': None
+            }
+
+        try:
+            default_storage.save(f'./channel/{thumbnail_name}{extension}', channel_thumbnail)
+        except IOError:
+            channel.delete()
             return {
                 'message': 'Failed',
                 'saved_object': None
@@ -32,12 +47,32 @@ class ChannelSerializer(serializers.Serializer):
 
     @transaction.atomic
     def update(self, instance: Channel, validated_data: Channel):
+
         instance.channel_description = validated_data['channel_description']
         instance.channel_name = validated_data['channel_name']
+        channel_thumbnail = validated_data['channel_thumbnail']
+
+        old_instance = instance
 
         try:
-            instance.save()
+            if channel_thumbnail is not None:
+                old_channel_name = f'./channel/{instance["channel_thumbnail"]}{instance["extension"]}'
+                default_name, extension = os.path.splitext(channel_thumbnail.name)
+                thumbnail_name = f'{uuid.uuid4()}-{default_name}'
+                instance.channel_thumbnail = thumbnail_name
+                instance.extension = extension
+                # First Save the object
+                instance.save()
+                # Then delete the old image and replace new One
+                default_storage.delete(old_channel_name)
+                default_storage.save(f'./channel/{thumbnail_name}{extension}', channel_thumbnail)
         except DatabaseError:
+            return {
+                'message': 'Failed',
+                'saved_object': None
+            }
+        except IOError:
+            old_instance.save()
             return {
                 'message': 'Failed',
                 'saved_object': None

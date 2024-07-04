@@ -14,25 +14,47 @@ from server.settings import MEDIA_ROOT
 
 class ChannelView(APIView):
     def post(self, request, _id):
-        request_data = request.data
-        request_data['id'] = _id
-        serializer = ChannelSerializer(data=request_data)
-        serializer.is_valid(raise_exception=True)
-        data = request.data
-        exists = Channel.objects.filter(pk=data['id']).exists()
+        exists = Channel.objects.filter(pk=_id).exists()
         if exists:
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
-        serializer.save()
-        return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
+
+        channel_thumbnail = request.FILES[
+            'channel_thumbnail'] if 'channel_thumbnail' in request.FILES else None
+
+        if not channel_thumbnail:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        request_data = {'channel_name': request.POST.get('channel_name') if 'channel_name' in request.POST else None,
+                        'channel_thumbnail': channel_thumbnail,
+                        'channel_description': request.POST.get(
+                            'channel_description') if 'channel_description' in request.POST else None, 'id': _id}
+        serializer = ChannelSerializer(data=request_data)
+        serializer.is_valid(raise_exception=True)
+        saved_object: Channel = serializer.save()['saved_object']
+        if not saved_object:
+            return Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+        return Response(data={
+            'id': saved_object.id_id,
+            'channel_name':saved_object.channel_name,
+            'channel_description':saved_object.channel_description,
+            'thumbnail':saved_object.channel_thumbnail
+        }, status=status.HTTP_201_CREATED)
 
     def put(self, request, _id):
-        data = request.data
-        data['id'] = _id
-        serializer = ChannelSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        instance = Channel.objects.filter(pk=data['id'])
+        instance = Channel.objects.filter(pk=_id)
         if not instance.exists():
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+        channel_instance: Channel = instance.first()
+        request_data = {'id': _id, 'channel_name': request.POST.get(
+            'channel_name') if 'channel_name' in request.POST else channel_instance.channel_name,
+                        'channel_description': request.POST.get(
+                            'channel_description') if 'channel_description' in request.POST else channel_instance.channel_description,
+                        'channel_thumbnail': request.FILES[
+                            'channel_thumbnail'] if 'channel_thumbnail' in request.FILES else None}
+        serializer = ChannelSerializer(data=request_data)
+        serializer.is_valid(raise_exception=True)
         serializer.update(instance=instance.first(), validated_data=data)
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 

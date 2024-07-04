@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 import uuid
@@ -9,6 +10,8 @@ class Channel(models.Model):
     id = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     channel_name = models.CharField(max_length=50)
     channel_description = models.TextField()
+    channel_thumbnail = models.CharField(max_length=1000,default='-')
+    extension = models.CharField(max_length=10,default='-')
     created_on = models.DateField(auto_now_add=True)
 
 
