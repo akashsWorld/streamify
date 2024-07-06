@@ -12,7 +12,7 @@ import { ValueChangeEvent } from '@angular/forms';
         class="outline-none rounded-md bg-transparent text-white border font-body h-9 mx-3 max-w-8/12 p-3"
         name="some-input"
         type="{{ type }}"
-        (change)="onChange($event)"
+        (input)="onChange($event)"
       />
     </label>
   `
@@ -28,10 +28,9 @@ export class InputComponent {
   style=''
 
   @Output()
-  change = new EventEmitter<string>();
-
+  inputValue = new EventEmitter<string>();
 
   onChange(eve: Event) {
-    console.log((eve.target as HTMLInputElement).value);
+    this.inputValue.emit((eve.target as HTMLInputElement).value)
   }
 }

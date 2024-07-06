@@ -11,10 +11,12 @@ export const routes: Routes = [
     {
         path:'',
         component:HomePageComponent,
+        pathMatch:'full',
         children:[
             {
                 path:'',
-                component:VideosComponent
+                component:VideosComponent,
+                pathMatch:'full',
             },
             {
                 path:'channel/:id',
