@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, signal, WritableSignal } from "@angular/core";
 
 
 @Injectable({
@@ -6,5 +6,5 @@ import { Injectable, signal } from "@angular/core";
 })
 export class AppService{
 
-    userToken=signal('')
+    userToken:WritableSignal<string>=signal('')
 }

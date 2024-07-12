@@ -1,5 +1,8 @@
 <nav class="max-h-24 flex items-center bg-transparent">
-  <div class="flex items-center my-4 w-2/4 mx-4 cursor-pointer" (click)="router.navigate(['/'])">
+  <div
+    class="flex items-center my-4 w-2/4 mx-4 cursor-pointer"
+    (click)="router.navigate(['/'])"
+  >
     <img
       ngSrc="streamify.png"
       height="80"
@@ -19,7 +22,7 @@
     />
   </div>
   <div class="flex w-1/4 items-center justify-evenly gap-4">
-    <a class="nav-items" >Popular</a>
+    <a class="nav-items">Popular</a>
     <a class="nav-items">Genra</a>
     <a class="nav-items">History</a>
     <a class="nav-items">Liked Videos</a>
@@ -27,20 +30,26 @@
 
   <div class="flex items-center w-1/4 justify-evenly">
     @if(!isLoggedIn){
-    <button class="user-btn" (click)="this.router.navigate(['/auth'])">Sign In</button>
+    <button class="user-btn" (click)="this.router.navigateByUrl(currentUrl!=='/auth'?'/auth':'/auth/signUp')">
+      {{currentUrl!=='/auth'?'Sign In':'Sign Up'}}
+    </button>
     }@else{
     <div class="user-btn cursor-pointer">
       <fa-icon [icon]="userIcon" class="pl-3"></fa-icon>
       <p class="font-heading px-3">{{ "Akash Biswas" }}</p>
     </div>
     @if(haveAnyChannel!==null){
-      <div class="user-btn cursor-pointer">
-        <fa-icon [icon]="VideoIcon" class="pl-3"></fa-icon>
-      <p class="font-heading px-3">{{haveAnyChannel}}</p>
+    <div class="user-btn cursor-pointer">
+      <fa-icon [icon]="VideoIcon" class="pl-3"></fa-icon>
+      <p class="font-heading px-3">{{ haveAnyChannel }}</p>
     </div>
     }@else {
-      <p  (click)="router.navigate(['/createChannel'])" class="text-white font-body mx-2 hover:underline cursor-pointer">Want to create a channel?</p>
-    }
-    }
+    <p
+      (click)="router.navigateByUrl('/createChannel')"
+      class="text-white font-body mx-2 hover:underline cursor-pointer"
+    >
+      Want to create a channel?
+    </p>
+    } }
   </div>
 </nav>

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
-import { Route, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Route, Router, RouterModule, RouterState } from '@angular/router';
 import {ButtonComponent} from "../button/button.component";
 import {FormsModule} from "@angular/forms";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -19,10 +19,10 @@ import {faVideo} from '@fortawesome/free-solid-svg-icons'
 })
 export class NavbarComponent {
 
-  constructor(protected router:Router){}
 
   userIcon = faUser
   VideoIcon = faVideo
+
   searchString:string=''
 
   @Input()
@@ -38,6 +38,18 @@ export class NavbarComponent {
     console.log('Key pressed');
     this.onSearch.emit()
 
+  }
+
+  currentUrl = ''
+  constructor(protected router:Router){}
+
+  
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentUrl = event.url
+      }
+    }); 
   }
 
 }
