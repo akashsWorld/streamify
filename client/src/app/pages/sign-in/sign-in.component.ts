@@ -30,8 +30,8 @@ export class SignInComponent {
       this.userService.loginUser(this.userLogin).subscribe(res=>{
         if(res.status==200){
           const {user_name,first_name,last_name,token,channel_name} = res.body
-          this.userService.userToken.set(token)
-          this.userService.userDetails.set({
+          this.userService.setUserToken(token)
+          this.userService.setUserDetails({
             firstName:first_name,
             lastName:last_name,
             userName:user_name,

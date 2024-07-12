@@ -9,5 +9,5 @@ class User(models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=100)
-    token = models.CharField(max_length=100, null=True)
+    token = models.CharField(max_length=100, null=True, unique=True)
     created_on = models.DateTimeField(auto_now_add=True)

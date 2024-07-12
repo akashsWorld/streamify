@@ -18,6 +18,23 @@ class UserView(APIView):
 
 
 class Authenticate(APIView):
+    def get(self, request):
+        auth_token = request.headers.get('Authorization')
+        if auth_token is None or len(auth_token) is not 43:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        user = User.objects.filter(token=auth_token[7:])
+        if user.exists():
+            user = user.first()
+            channel = Channel.objects.filter(pk=user.id)
+            return Response(data={
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'user_name': user.user_name,
+                'channel_name': channel.first().channel_name if channel.exists() else None
+            }, status=200)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
     def post(self, request: Request):
         request_data = request.data
 

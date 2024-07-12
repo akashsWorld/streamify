@@ -29,19 +29,19 @@
   </div>
 
   <div class="flex items-center w-1/4 justify-evenly">
-    @if(!isLoggedIn){
+    @if(isLoggedIn()===null){
     <button class="user-btn" (click)="this.router.navigateByUrl(currentUrl!=='/auth'?'/auth':'/auth/signUp')">
       {{currentUrl!=='/auth'?'Sign In':'Sign Up'}}
     </button>
     }@else{
     <div class="user-btn cursor-pointer">
       <fa-icon [icon]="userIcon" class="pl-3"></fa-icon>
-      <p class="font-heading px-3">{{ "Akash Biswas" }}</p>
+      <p class="font-heading px-3">{{ isLoggedIn() }}</p>
     </div>
-    @if(haveAnyChannel!==null){
+    @if(haveAnyChannel()!==null){
     <div class="user-btn cursor-pointer">
       <fa-icon [icon]="VideoIcon" class="pl-3"></fa-icon>
-      <p class="font-heading px-3">{{ haveAnyChannel }}</p>
+      <p class="font-heading px-3">{{ haveAnyChannel() }}</p>
     </div>
     }@else {
     <p
