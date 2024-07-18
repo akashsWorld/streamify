@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../service/user.service';
 import { NgClass } from '@angular/common';
+import { AppService } from '../../service/app.service';
 @Component({
   selector: 'app-sign-in',
   standalone: true,
@@ -23,7 +24,7 @@ export class SignInComponent {
     password:''
   }
 
-  constructor(protected router:Router,protected userService:UserService){}
+  constructor(protected router:Router,protected userService:UserService,private appService:AppService){}
 
   onLogin(){
     if(this.userLogin.email.includes('@') && this.userLogin.password.length>=8){
@@ -31,13 +32,13 @@ export class SignInComponent {
         if(res.status==200){
           const {user_name,first_name,last_name,token,channel_name} = res.body
           this.userService.setUserToken(token)
-          this.userService.setUserDetails({
+          this.appService.userDetails.set({
             firstName:first_name,
             lastName:last_name,
             userName:user_name,
             channelName:channel_name
           })
-          this.router.navigateByUrl('/')
+          this.router.navigateByUrl("/")
         }
       })
     }else{

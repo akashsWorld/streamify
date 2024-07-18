@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BrowserStorageService } from './browser.service';
+import { AppService } from './app.service';
 
 export interface UserObejct {
   first_name: string;
@@ -19,31 +20,31 @@ export interface UserResponse {
   firstName: string;
   lastName: string;
   userName: string;
-  channelName: string;
+  channelName: string|null;
 }
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  userToken: WritableSignal<string | null> = signal(null);
 
-  userDetails: WritableSignal<UserResponse|null> = signal(null);
-
+  
   constructor(
     private http: HttpClient,
-    private browserService: BrowserStorageService
+    private browserService: BrowserStorageService,
+    private appService:AppService
   ) {
     const userToken = browserService.get('user-token');
     if (userToken) {
-      this.userToken.set(userToken);
+      this.appService.userToken.set(userToken);
       const headers = {
         Authorization:`Bearer ${userToken}`
       }
         http.get<any>('http://localhost:8000/user/auth',{observe:'response',headers}).subscribe(res=>{
             if(res.status===200){
                 const {user_name,first_name,last_name,channel_name} = res.body
-                this.userDetails.set({
+                this.appService.userDetails.set({
                     firstName: first_name,
                     lastName:last_name,
                     userName:user_name,
@@ -58,12 +59,12 @@ export class UserService {
   }
 
   setUserToken(token: string) {
-    this.userToken.set(token);
+    this.appService.userToken.set(token);
     this.browserService.set('user-token', token);
   }
 
   logoutUser() {
-    this.userToken.set(null);
+    this.appService.userToken.set(null);
     this.browserService.delete('user-token');
   }
 
@@ -89,8 +90,5 @@ export class UserService {
 
   likeVideo() {}
 
-  setUserDetails(userResponse:UserResponse) {
-    this.userDetails.set(userResponse)
-    console.log(this.userDetails())
-  }
+  
 }
